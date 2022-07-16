@@ -15,12 +15,12 @@ class List{
 
     //controllo lista vuota
     bool isEmpty(){
-        return (head == nullptr);
+        return head == nullptr;
     }
     
     //inserimento in testa
     void insertHead(T val){
-        if (isEmpty()){
+        if (this->isEmpty()){
             head = new Node<T>(val);
         }
         Node<T>* ptr = new Node<T>(val);
@@ -30,14 +30,14 @@ class List{
 
     //inserimento in coda
     void insertTail(T val){
-        if(isEmpty()){
+        if(this->isEmpty()){
             insertHead(val);
             return;
         }
 
         Node<T>* ptr = head;
-        while (!ptr->getNext()){
-            ptr = ptr->getNext;
+        while (ptr->getNext() != nullptr){  //va scritto diverso da nullptr, se no non entra nel while.
+            ptr = ptr->getNext();
         }
 
         Node<T>* temp = new Node<T>(val);
@@ -46,13 +46,18 @@ class List{
 
     //inserimento in ordine
     void Insert(T val){
-        if (isEmpty()){
+        if (this->isEmpty()){
+            insertHead(val);
+            return;
+        }
+
+        if (val <= head->val){
             insertHead(val);
             return;
         }
 
         Node<T>* ptr = head;
-        while (!(ptr->getNext()) && val>ptr->val){
+        while ((ptr->getNext() != nullptr) && val>ptr->val){
             if (ptr->next->val > val)
                 break;
             ptr = ptr->getNext();
@@ -64,8 +69,8 @@ class List{
     }
 
     //cancellazione in testa
-    void removeHead(T val){
-        if (isEmpty()){
+    void removeHead(){
+        if (this->isEmpty()){
             cout << "empty list" << endl;
             return;
         }
@@ -76,15 +81,15 @@ class List{
     }
 
     //cancellazione in coda
-    void removeTail(T val){
-        if(isEmpty){
+    void removeTail(){
+        if(this->isEmpty()){
             cout << "empty list" << endl;
             return;
         }
 
         Node<T>* prev = nullptr;
         Node<T>* cur = head;
-        while(!(cur->getNext())){
+        while((cur->getNext()) != nullptr){
             prev = cur;
             cur = cur->getNext();
         }
@@ -92,25 +97,35 @@ class List{
     }
 
     void removeNode(T val){
-          if(isEmpty){
+          if(this->isEmpty()){
             cout << "empty list" << endl;
             return;
         }
         
         if (head->val == val){
-            removeHead(val);
+            removeHead();
             return;
         }
 
         Node<T>* prev = nullptr;
         Node<T>* cur = head;
-        while(!(cur->getNext())){
+        while(cur->getNext()!= nullptr && (val!=cur->val)){
             prev = cur;
             cur = cur->getNext();
         }
+
         prev->next = cur->next;
     }
-
+    friend ostream& operator<< (ostream& out, const List<T>& list){
+        out << "List head=" << endl <<"\t"; 
+        Node<T> *ptr = list.head;
+        while (ptr->getNext()!=nullptr){
+            out << *ptr << endl <<"\t";
+            ptr = ptr->getNext();
+        }
+        out <<"node val " << ptr->getVal() << " - next nullptr";
+        return out;
+    }
 };
 
 

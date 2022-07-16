@@ -15,12 +15,17 @@ class Node{
         next = nullptr;
     }
 
-    T getVal(Node* ptr){
-        return ptr.val;
+    T getVal(){
+        return this->val;
     }
 
-    Node* getNext(Node* ptr){
-        return ptr.next;
+    Node* getNext(){
+        return this->next;
+    }
+
+    friend ostream& operator<<(ostream& out, const Node<T> &node){  
+        out << " node val " << node.val << " - next " << node.next->getVal();
+        return out;
     }
 };
 
